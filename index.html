@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-white">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Официальный центр пополнения Garena — Free Fire Top-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: '#E52020',
+          'brand-hover': '#C81818',
+          'kaspi-red': '#F14635',
+        },
+        fontFamily: {
+          inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  .seg-btn.active {
+    border-color: #E3242B !important;
+    color: #E3242B !important;
+    background-color: #FFF !important;
+  }
+  
+  .diamond-card.selected, .offer-card.selected, .payment-card.selected {
+    border-color: #E3242B !important;
+    box-shadow: 0 0 0 1px #E3242B inset !important;
+    background-color: #FEF2F2 !important;
+  }
+
+  .step-badge {
+    background: #E3242B;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body class="bg-white text-gray-900 font-inter min-h-full flex flex-col selection:bg-brand selection:text-white">
+
+<header class="fixed top-0 left-0 right-0 h-[60px] bg-white flex items-center justify-between z-40 border-b border-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.06)] px-4">
+  <div class="flex items-center gap-3">
+    <!-- Garena Official Logo text -->
+    <div class="flex items-center gap-1.5 font-black text-lg tracking-tighter">
+      <span class="text-brand">GARENA</span>
+      <span class="text-gray-900 text-xs font-bold uppercase tracking-normal px-1.5 py-0.5 bg-gray-100 rounded">Top-Up</span>
+    </div>
+  </div>
+
+  <!-- Right Profile Header -->
+  <div class="flex items-center gap-2">
+    <div id="headerUserStatus" class="hidden sm:flex items-center gap-1.5 bg-gray-50 py-1 px-2.5 rounded-full border border-gray-200">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      <span id="headerPlayerNick" class="text-xs font-semibold text-gray-700">Не авторизован</span>
+    </div>
+    
+    <div id="profileBtn" class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition">
+      <svg class="w-5 h-5 fill-gray-500" viewBox="0 0 24 24">
+        <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.5c-3.3 0-9.8 1.6-9.8 4.9v2.4h19.6v-2.4c0-3.3-6.5-4.9-9.8-4.9z"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main class="flex-1 max-w-[560px] w-full mx-auto pt-[76px] pb-12 px-3.5 space-y-6">
+
+  <section>
+    <div class="flex items-center gap-2 mb-2.5">
+      <div class="step-badge w-[22px] h-[22px] text-xs flex items-center justify-center flex-shrink-0 font-bold">
+        1
+      </div>
+      <h2 class="text-base sm:text-lg font-bold text-gray-900">
+        Вход
+      </h2>
+    </div>
+
+    <div class="bg-[#F4F4F5] rounded-xl p-3.5 sm:p-4">
+      <div class="flex items-center gap-1 mb-2 text-xs font-semibold text-gray-700">
+        ID Игрока 
+        <button id="idHelpBtn" type="button" class="w-3.5 h-3.5 rounded-full border border-gray-400 text-gray-500 text-[9px] font-bold flex items-center justify-center cursor-pointer hover:border-brand hover:text-brand" title="Как узнать ID?">
+          ?
+        </button>
+      </div>
+
+      <div id="loginFormBlock">
+        <div class="flex h-[42px] sm:h-[44px] shadow-sm mb-3">
+          <input
+            id="playerIdInput"
+            type="text"
+            class="flex-1 bg-white border border-gray-300 border-r-0 rounded-l-lg px-3 text-sm sm:text-base text-gray-900 placeholder-gray-400 focus:outline-none"
+            placeholder="Введи ID игрока здесь"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            autocomplete="off"
+          >
+          <button 
+            id="loginBtn" 
+            type="button" 
+            class="bg-[#E3242B] hover:bg-[#C81818] text-white font-bold text-sm sm:text-base px-6 rounded-r-lg transition cursor-pointer active:scale-95"
+          >
+            Войти
+          </button>
+        </div>
+        <p id="idErrorMsg" class="text-[10px] text-red-600 mb-2 font-semibold hidden">
+          Введите корректный ID игрока
+        </p>
+
+        <div class="text-center pt-1">
+          <div class="text-[11px] text-gray-500 mb-2.5">Или вход с игровым аккаунтом</div>
+          <div class="flex items-center justify-center gap-3">
+            <button class="w-8 h-8 rounded-full bg-[#1877F2] flex items-center justify-center text-white hover:opacity-90 transition cursor-pointer shadow-xs">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+            </button>
+            <button class="w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition cursor-pointer shadow-xs">
+              <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            </button>
+            <button class="w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition cursor-pointer shadow-xs text-black">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M13.68 10.29L22 0h-1.97l-7.22 8.93L7.04 0H0l8.72 12.33L0 23.33h1.97l7.63-9.43 6.09 9.43H22l-8.32-13.04zM9.98 12.64l-1.04-1.45L2.1 2.3h3.02l5.44 7.55 1.04 1.45 7.19 9.98h-3.02l-5.79-8.64z"/></svg>
+            </button>
+            <button class="w-8 h-8 rounded-full bg-[#0077FF] flex items-center justify-center text-white hover:opacity-90 transition cursor-pointer shadow-xs">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M13.162 18.994c.609 0 .858-.406.851-.915-.031-1.917.714-2.949 2.059-1.604 1.488 1.488 1.796 2.519 3.603 2.519h3.2c.808 0 1.126-.26 1.126-.668 0-.863-1.421-2.386-2.625-3.504-1.686-1.543-1.724-1.604-.32-3.197 2.059-2.333 3.091-3.665 2.571-4.137-.478-.445-1.523-.372-1.523-.372h-3.238c-.808 0-1.077.346-1.439 1.127-1.71 3.666-3.268 4.225-3.603 3.754-.477-.665-.308-2.623-.308-3.468 0-1.895.314-2.822-1.258-3.193-1.229-.286-1.554-.306-2.575-.306-1.579 0-2.434.129-3.067.433-.633.303-.787.89-.523 1.196.48.556 1.464.717 1.536 2.454.072 1.737-.23 3.518-.949 3.844-.719.327-1.848-.31-3.327-3.649-.661-1.493-.896-1.979-1.328-2.186-.431-.208-1.054-.377-1.054-.377h-3.24c-.759 0-1.082.355-1.082.756 0 1.107 2.766 8.528 7.376 11.233 2.85 1.673 4.288 1.253 5.485 1.253z"/></svg>
+            </button>
+            <button class="w-8 h-8 rounded-full bg-white border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition cursor-pointer shadow-xs text-black">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M16.89 12.01c-.01-2.22 1.83-3.31 1.93-3.36-1.04-1.52-2.66-1.73-3.23-1.76-1.38-.14-2.7.81-3.4.81-.7 0-1.78-.79-2.92-.77-1.49.02-2.87.87-3.64 2.22-1.56 2.71-.4 6.72 1.12 8.92.74 1.07 1.62 2.26 2.8 2.22 1.14-.04 1.58-.74 2.97-.74 1.38 0 1.8.74 2.98.72 1.2-.02 1.95-1.08 2.68-2.14.85-1.23 1.2-2.42 1.22-2.49-.03-.01-2.33-.89-2.35-3.63zM14.65 6.96c.62-.75 1.04-1.79.92-2.83-.89.04-2 .6-2.63 1.35-.56.67-1.06 1.74-.92 2.75.99.08 2-.51 2.63-1.27z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="loggedInBlock" class="hidden bg-white border border-gray-200 rounded-xl p-3 flex items-center justify-between shadow-xs">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded bg-gray-100 flex items-center justify-center text-xs font-black text-gray-500">
+            FF
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="playerNickname" class="text-sm font-bold text-gray-900">Survivor</span>
+            </div>
+            <div class="text-[11px] font-medium text-gray-500">
+              ID: <span id="displayPlayerId" class="text-gray-900">--</span>
+            </div>
+          </div>
+        </div>
+        <button id="changeIdBtn" type="button" class="text-[11px] font-bold text-gray-400 border border-gray-300 rounded px-2 py-1 hover:text-gray-600">
+          Сменить
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="flex items-center gap-2 mb-2.5">
+      <div class="step-badge w-[22px] h-[22px] text-xs flex items-center justify-center flex-shrink-0 font-bold">
+        2
+      </div>
+      <h2 class="text-base sm:text-lg font-bold text-gray-900">
+        Сумма пополнения
+      </h2>
+    </div>
+
+    <div class="flex gap-2 mb-3.5">
+      <button class="seg-btn active px-4 py-1 rounded-full border border-gray-300 bg-white text-xs font-medium text-gray-800 cursor-pointer transition" type="button" data-seg="buy">
+        Купить
+      </button>
+      <button class="seg-btn px-4 py-1 rounded-full border border-gray-300 bg-white text-xs font-medium text-gray-500 cursor-pointer transition" type="button" data-seg="receive">
+        Получить
+      </button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2 mb-5" id="diamondGrid">
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="25 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">25</span>
+      </button>
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="100 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">100</span>
+      </button>
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="310 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">310</span>
+      </button>
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="520 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">520</span>
+      </button>
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="1,060 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">1,060</span>
+      </button>
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="2,180 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">2,180</span>
+      </button>
+      <button class="diamond-card h-[40px] rounded-lg border border-gray-200 bg-white flex items-center justify-center gap-1.5 px-2 cursor-pointer transition hover:border-[#E3242B]" type="button" data-name="5,600 Алмазов">
+        <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 28 28" fill="none">
+          <polygon points="14,2 24,10 14,26 4,10" fill="#7FD1F2" stroke="#2E8FC0" stroke-width="1.5" stroke-linejoin="round"/>
+          <polygon points="14,2 24,10 4,10" fill="#B8E6F9"/>
+        </svg>
+        <span class="text-xs sm:text-[13px] font-medium text-gray-700">5,600</span>
+      </button>
+    </div>
+
+    <h3 class="text-xs font-bold text-gray-500 mb-2">
+      Специальные Предложения
+    </h3>
+
+    <!-- Special Offers Grid with Custom Image Cards -->
+    <div class="grid grid-cols-2 gap-2">
+      <!-- Offer 1: BP Card -->
+      <div class="offer-card border border-gray-200 rounded-lg p-2 bg-white flex flex-col items-center transition hover:border-gray-300 cursor-pointer" data-name="BP Card">
+        <!-- Image 4: Booyah Pass Card -->
+        <img src="IMG_8278.png" alt="Booyah Pass Card" class="max-w-full h-auto rounded mb-1">
+        <div class="flex items-center justify-between w-full px-0.5">
+          <span class="text-[11px] font-medium text-gray-800 truncate">BP Card</span>
+          <button class="info-btn w-3.5 h-3.5 rounded border border-[#E3242B] text-[#E3242B] text-[8px] flex items-center justify-center font-bold flex-shrink-0" type="button" data-title="BP Card" data-desc="Booyah Pass Card для получения наград текущего сезона.">i</button>
+        </div>
+      </div>
+
+      <!-- Offer 2: Еженедельный Lite -->
+      <div class="offer-card border border-gray-200 rounded-lg p-2 bg-white flex flex-col items-center transition hover:border-gray-300 cursor-pointer" data-name="Еженедельный Lite">
+        <!-- Image 3: Blue W Lite -->
+        <img src="IMG_8277.png" alt="Free Fire Item W Lite Blue" class="max-w-full h-auto rounded mb-1">
+        <div class="flex items-center justify-between w-full px-0.5">
+          <span class="text-[11px] font-medium text-gray-800 truncate">Еженедельный Lite</span>
+          <button class="info-btn w-3.5 h-3.5 rounded border border-[#E3242B] text-[#E3242B] text-[8px] flex items-center justify-center font-bold flex-shrink-0" type="button" data-title="Еженедельный Lite" data-desc="Еженедельный подписочный ваучер Lite.">i</button>
+        </div>
+      </div>
+
+      <!-- Offer 3: Ваучер на Неделю -->
+      <div class="offer-card border border-gray-200 rounded-lg p-2 bg-white flex flex-col items-center transition hover:border-gray-300 cursor-pointer" data-name="Ваучер на Неделю">
+        <!-- Image 2: Purple W -->
+        <img src="IMG_8276.png" alt="Free Fire Item W Purple" class="max-w-full h-auto rounded mb-1">
+        <div class="flex items-center justify-between w-full px-0.5">
+          <span class="text-[11px] font-medium text-gray-800 truncate">Ваучер на Неделю</span>
+          <button class="info-btn w-3.5 h-3.5 rounded border border-[#E3242B] text-[#E3242B] text-[8px] flex items-center justify-center font-bold flex-shrink-0" type="button" data-title="Ваучер на Неделю" data-desc="Мгновенно выдает алмазы и ежедневные бонусы в течение недели.">i</button>
+        </div>
+      </div>
+
+      <!-- Offer 4: Ваучер на Месяц -->
+      <div class="offer-card border border-gray-200 rounded-lg p-2 bg-white flex flex-col items-center transition hover:border-gray-300 cursor-pointer" data-name="Ваучер на Месяц">
+        <!-- Image 1: Gold M -->
+        <img src="IMG_8275.png" alt="Free Fire Item M Gold" class="max-w-full h-auto rounded mb-1">
+        <div class="flex items-center justify-between w-full px-0.5">
+          <span class="text-[11px] font-medium text-gray-800 truncate">Ваучер на Месяц</span>
+          <button class="info-btn w-3.5 h-3.5 rounded border border-[#E3242B] text-[#E3242B] text-[8px] flex items-center justify-center font-bold flex-shrink-0" type="button" data-title="Ваучер на Месяц" data-desc="Месячный Ваучер — наибольшая выгода для игрока.">i</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="flex items-center gap-2 mb-2.5">
+      <div class="step-badge w-[22px] h-[22px] text-xs flex items-center justify-center flex-shrink-0 font-bold">
+        3
+      </div>
+      <h2 class="text-base sm:text-lg font-bold text-gray-900">
+        Платежный метод
+      </h2>
+    </div>
+
+    <!-- Kaspi Only payment option -->
+    <div class="grid grid-cols-2 gap-2 mb-5">
+      <button class="payment-card relative border border-gray-200 rounded-lg p-3 bg-white flex items-center gap-2.5 cursor-pointer hover:border-[#E3242B] transition text-left selected" type="button" onclick="openPaymentModal()">
+        <div class="absolute -top-2 right-2 bg-[#E3242B] text-white text-[8px] font-bold px-1 py-0.5 rounded flex items-center gap-0.5">
+          <svg class="w-2 h-2 fill-current" viewBox="0 0 24 24"><polygon points="12,2 22,9 12,22 2,9"/></svg> ПРОМО
+        </div>
+        <div class="w-8 h-8 bg-kaspi-red rounded-lg flex items-center justify-center flex-shrink-0 text-white shadow-xs">
+          <svg class="w-4.5 h-4.5 fill-white" viewBox="0 0 24 24"><path d="M6 4h3.5v6.5L14 4h4.5l-5.5 7.5L18.5 20H14l-4.5-6.5V20H6V4z"/></svg>
+        </div>
+        <div>
+          <span class="text-xs font-bold text-gray-900 block leading-tight">Kaspi.kz</span>
+          <span class="text-[10px] text-gray-500 font-medium">Без комиссии</span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <footer class="pt-5 border-t border-gray-200 text-center text-xs text-gray-500 space-y-2.5">
+    <p class="leading-relaxed max-w-md mx-auto text-[10px] sm:text-[11px]">
+      ТОО "Гарена Казахстан". БИН 201040014569. Email: support@ffsupportcis.zendesk.com. Все права защищены.<br>
+      Адрес: 050051, Казахстан, г.Алматы, Медеуский р-н, пр.Достык 105, БЦ «Премьер Алатау», 3-й этаж, офис 300
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-gray-600 font-semibold text-[11px]">
+      <a href="#" class="hover:text-brand transition">ЧАВО</a>
+      <span class="text-gray-300">|</span>
+      <a href="#" class="hover:text-brand transition">Центр помощи</a>
+      <span class="text-gray-300">|</span>
+      <a href="#" class="hover:text-brand transition">Условия Использования</a>
+      <span class="text-gray-300">|</span>
+      <a href="#" class="hover:text-brand transition">Политика Конфиденциальности</a>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Kaspi Payment Modal Popup -->
+<div id="kaspiModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-200">
+  <div class="bg-white rounded-2xl p-5 sm:p-6 max-w-[360px] w-full shadow-2xl transform scale-95 transition-transform duration-200 text-center relative border border-gray-100">
+    
+    <div class="w-14 h-14 rounded-2xl bg-kaspi-red mx-auto flex items-center justify-center text-white mb-3 shadow-md">
+      <svg class="w-8 h-8 fill-white" viewBox="0 0 24 24">
+        <path d="M6 4h3.5v6.5L14 4h4.5l-5.5 7.5L18.5 20H14l-4.5-6.5V20H6V4z"/>
+      </svg>
+    </div>
+
+    <h3 class="text-lg font-bold text-gray-900 mb-1">Төлем жасау / Оплата Kaspi</h3>
+    <p class="text-xs text-gray-500 mb-2">Kaspi Gold арқылы көрсетілген номерге аударыңыз:</p>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 mb-3 text-left">
+      <div class="text-[10px] text-amber-800 font-bold uppercase tracking-wider">Товар / Тауар:</div>
+      <div class="text-xs font-extrabold text-amber-950 flex justify-between">
+        <span id="modalOrderTitle">100 Алмазов</span>
+      </div>
+    </div>
+
+    <div class="bg-gray-100 rounded-xl p-3.5 mb-4 flex items-center justify-between border border-gray-200">
+      <div class="text-left">
+        <div class="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider">Телефон номері</div>
+        <div id="phoneNumber" class="text-base sm:text-lg font-black text-gray-900 tracking-wide">+7 775 447 63 27</div>
+      </div>
+      <button id="copyPhoneBtn" class="bg-white border border-gray-300 text-gray-800 text-xs font-extrabold px-3 py-2 rounded-xl hover:bg-gray-50 transition active:scale-95 cursor-pointer shadow-xs">
+        Көшіру
+      </button>
+    </div>
+
+    <div class="space-y-2">
+      <button id="openKaspiBtn" class="w-full py-3 bg-kaspi-red text-white rounded-xl text-sm font-extrabold shadow-md hover:bg-[#D33323] transition cursor-pointer active:scale-98">
+        Kaspi қосымшасына өту
+      </button>
+      <button id="closeKaspiModal" class="w-full py-2.5 bg-gray-100 text-gray-700 rounded-xl text-xs font-bold hover:bg-gray-200 transition cursor-pointer">
+        Жабу
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Info Modal Popup -->
+<div id="infoModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-200">
+  <div class="bg-white rounded-2xl p-5 sm:p-6 max-w-[340px] w-full shadow-xl transform scale-95 transition-transform duration-200 text-center">
+    <div class="w-10 h-10 rounded-full bg-red-100 text-brand mx-auto flex items-center justify-center font-black text-lg mb-3">i</div>
+    <h3 id="modalTitle" class="text-base font-extrabold text-gray-900 mb-2"></h3>
+    <p id="modalDesc" class="text-xs text-gray-600 leading-relaxed mb-5"></p>
+    <button id="closeModal" class="w-full py-2.5 bg-brand text-white rounded-xl text-xs font-extrabold cursor-pointer hover:bg-[#C81818] transition shadow-xs">Понятно</button>
+  </div>
+</div>
+
+<!-- Player ID Help Modal Popup -->
+<div id="idHelpModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-200">
+  <div class="bg-white rounded-2xl p-5 sm:p-6 max-w-[360px] w-full shadow-xl transform scale-95 transition-transform duration-200 text-center">
+    <h3 class="text-base font-extrabold text-gray-900 mb-2">Где найти ID Игрока?</h3>
+    <div class="bg-gray-100 rounded-xl p-3 mb-4 text-left text-xs text-gray-700 space-y-2">
+      <p>1. Откройте игру <b>Free Fire</b> на своем устройстве.</p>
+      <p>2. Нажмите на ваш аватар/профиль в левом верхнем углу экрана.</p>
+      <p>3. На вкладке "Личное" найдите свой <b>ID (9-10 цифр)</b> и скопируйте его.</p>
+    </div>
+    <button id="closeIdHelpModal" class="w-full py-2.5 bg-gray-900 text-white rounded-xl text-xs font-extrabold cursor-pointer hover:bg-black transition">Понятно</button>
+  </div>
+</div>
+
+<!-- Notification Toast -->
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-gray-900/90 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-lg z-50 opacity-0 pointer-events-none transition-opacity duration-200 flex items-center gap-2">
+  <span id="toastText">Скопировано!</span>
+</div>
+
+<script>
+  let activePlayerId = '';
+  let activePlayerNick = '';
+  let selectedItem = { name: '100 Алмазов' };
+
+  const playerIdInput = document.getElementById('playerIdInput');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginFormBlock = document.getElementById('loginFormBlock');
+  const loggedInBlock = document.getElementById('loggedInBlock');
+  const playerNickname = document.getElementById('playerNickname');
+  const displayPlayerId = document.getElementById('displayPlayerId');
+  const changeIdBtn = document.getElementById('changeIdBtn');
+  const idErrorMsg = document.getElementById('idErrorMsg');
+  const headerPlayerNick = document.getElementById('headerPlayerNick');
+
+  const toast = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+
+  function showToast(msg) {
+    if (!toast || !toastText) return;
+    toastText.textContent = msg;
+    toast.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'pointer-events-none');
+    }, 2200);
+  }
+
+  if (playerIdInput) {
+    playerIdInput.addEventListener('input', () => {
+      playerIdInput.value = playerIdInput.value.replace(/\D/g, '');
+      if (idErrorMsg) idErrorMsg.classList.add('hidden');
+    });
+
+    playerIdInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  }
+
+  function handleLogin() {
+    if (!playerIdInput) return;
+    const val = playerIdInput.value.trim();
+    if (!val || val.length < 5) {
+      if (idErrorMsg) idErrorMsg.classList.remove('hidden');
+      playerIdInput.focus();
+      return;
+    }
+
+    activePlayerId = val;
+    activePlayerNick = 'Survivor_' + val.slice(-3);
+
+    if (playerNickname) playerNickname.textContent = activePlayerNick;
+    if (displayPlayerId) displayPlayerId.textContent = activePlayerId;
+    if (headerPlayerNick) headerPlayerNick.textContent = activePlayerNick;
+
+    if (loginFormBlock) loginFormBlock.classList.add('hidden');
+    if (loggedInBlock) loggedInBlock.classList.remove('hidden');
+
+    showToast('Игрок успешно найден!');
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener('click', handleLogin);
+  }
+
+  if (changeIdBtn) {
+    changeIdBtn.addEventListener('click', () => {
+      if (loginFormBlock) loginFormBlock.classList.remove('hidden');
+      if (loggedInBlock) loggedInBlock.classList.add('hidden');
+      if (headerPlayerNick) headerPlayerNick.textContent = 'Не авторизован';
+      if (playerIdInput) playerIdInput.focus();
+    });
+  }
+
+  document.querySelectorAll('.seg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  function selectProduct(name, element) {
+    document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.offer-card').forEach(c => c.classList.remove('selected'));
+
+    if (element) element.classList.add('selected');
+    selectedItem = { name };
+
+    showToast(`Выбрано: ${name}`);
+  }
+
+  document.querySelectorAll('.diamond-card').forEach(card => {
+    card.addEventListener('click', () => {
+      selectProduct(card.getAttribute('data-name'), card);
+    });
+  });
+
+  document.querySelectorAll('.offer-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.info-btn')) return;
+      selectProduct(card.getAttribute('data-name'), card);
+    });
+  });
+
+  const kaspiModal = document.getElementById('kaspiModal');
+  const closeKaspiModal = document.getElementById('closeKaspiModal');
+  const openKaspiBtn = document.getElementById('openKaspiBtn');
+  const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+  const modalOrderTitle = document.getElementById('modalOrderTitle');
+
+  function openPaymentModal() {
+    if (!activePlayerId) {
+      showToast('Сначала введите ID Игрока!');
+      if (loginFormBlock) loginFormBlock.classList.remove('hidden');
+      if (loggedInBlock) loggedInBlock.classList.add('hidden');
+      if (playerIdInput) playerIdInput.focus();
+      return;
+    }
+
+    if (!selectedItem) {
+      showToast('Выберите товар!');
+      return;
+    }
+
+    if (modalOrderTitle) modalOrderTitle.textContent = selectedItem.name;
+    if (kaspiModal) kaspiModal.classList.remove('opacity-0', 'pointer-events-none');
+  }
+
+  if (closeKaspiModal && kaspiModal) {
+    closeKaspiModal.addEventListener('click', () => {
+      kaspiModal.classList.add('opacity-0', 'pointer-events-none');
+    });
+  }
+
+  if (kaspiModal) {
+    kaspiModal.addEventListener('click', (e) => {
+      if (e.target === kaspiModal) kaspiModal.classList.add('opacity-0', 'pointer-events-none');
+    });
+  }
+
+  if (copyPhoneBtn) {
+    copyPhoneBtn.addEventListener('click', () => {
+      const phone = '+77754476327';
+      const tempInput = document.createElement('input');
+      tempInput.value = phone;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      copyPhoneBtn.textContent = 'Көшірілді!';
+      copyPhoneBtn.classList.add('bg-green-100', 'text-green-800', 'border-green-300');
+      showToast('Номер скопирован!');
+
+      setTimeout(() => {
+        copyPhoneBtn.textContent = 'Көшіру';
+        copyPhoneBtn.classList.remove('bg-green-100', 'text-green-800', 'border-green-300');
+      }, 2000);
+    });
+  }
+
+  if (openKaspiBtn) {
+    openKaspiBtn.addEventListener('click', () => {
+      window.location.href = 'https://kaspi.kz/pay';
+    });
+  }
+
+  const infoModal = document.getElementById('infoModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const closeModal = document.getElementById('closeModal');
+
+  document.querySelectorAll('.info-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (modalTitle) modalTitle.textContent = btn.getAttribute('data-title');
+      if (modalDesc) modalDesc.textContent = btn.getAttribute('data-desc');
+      if (infoModal) infoModal.classList.remove('opacity-0', 'pointer-events-none');
+    });
+  });
+
+  if (closeModal && infoModal) {
+    closeModal.addEventListener('click', () => {
+      infoModal.classList.add('opacity-0', 'pointer-events-none');
+    });
+  }
+
+  const idHelpBtn = document.getElementById('idHelpBtn');
+  const idHelpModal = document.getElementById('idHelpModal');
+  const closeIdHelpModal = document.getElementById('closeIdHelpModal');
+
+  if (idHelpBtn && idHelpModal) {
+    idHelpBtn.addEventListener('click', () => idHelpModal.classList.remove('opacity-0', 'pointer-events-none'));
+  }
+  if (closeIdHelpModal && idHelpModal) {
+    closeIdHelpModal.addEventListener('click', () => idHelpModal.classList.add('opacity-0', 'pointer-events-none'));
+  }
+</script>
+
+</body>
+</html>
